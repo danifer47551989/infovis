@@ -1,54 +1,403 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>Info Vis</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Info Vis | Índice</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg1: #0f172a;
+      --bg2: #1e293b;
+      --bg3: #334155;
+      --card: rgba(255, 255, 255, 0.12);
+      --card-border: rgba(255, 255, 255, 0.18);
+      --text: #f8fafc;
+      --muted: #cbd5e1;
+      --accent1: #38bdf8;
+      --accent2: #818cf8;
+      --accent3: #22c55e;
+      --shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(56, 189, 248, 0.22), transparent 30%),
+        radial-gradient(circle at top right, rgba(129, 140, 248, 0.22), transparent 28%),
+        radial-gradient(circle at bottom center, rgba(34, 197, 94, 0.14), transparent 30%),
+        linear-gradient(135deg, var(--bg1), var(--bg2), var(--bg3));
+      overflow-x: hidden;
+    }
+
+    .background-grid {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 35px 35px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.2));
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      width: min(1200px, 92%);
+      margin: 0 auto;
+      padding: 50px 0 60px;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 45px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      margin-bottom: 14px;
+      letter-spacing: 0.5px;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 760px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(280px, 1fr));
+      gap: 28px;
+      margin-bottom: 45px;
+    }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: var(--shadow);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border 0.25s ease;
+    }
+
+    .panel:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 28px 60px rgba(0, 0, 0, 0.4);
+      border-color: rgba(255,255,255,0.28);
+    }
+
+    .panel-tag {
+      display: inline-block;
+      font-size: 0.82rem;
+      padding: 8px 14px;
+      border-radius: 999px;
+      margin-bottom: 18px;
+      font-weight: bold;
+      letter-spacing: 0.4px;
+    }
+
+    .panel-tag.tp {
+      background: rgba(56, 189, 248, 0.18);
+      color: #bae6fd;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+    }
+
+    .panel-tag.practicas {
+      background: rgba(129, 140, 248, 0.18);
+      color: #e0e7ff;
+      border: 1px solid rgba(129, 140, 248, 0.35);
+    }
+
+    .panel h2 {
+      font-size: 1.7rem;
+      margin-bottom: 14px;
+    }
+
+    .panel p {
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 24px;
+      min-height: 95px;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      padding: 14px 22px;
+      border-radius: 14px;
+      transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      opacity: 0.95;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent1), var(--accent2));
+      box-shadow: 0 10px 25px rgba(56, 189, 248, 0.25);
+    }
+
+    .btn-secondary {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      box-shadow: 0 10px 25px rgba(99, 102, 241, 0.25);
+    }
+
+    .btn-tertiary {
+      background: linear-gradient(135deg, #16a34a, #22c55e);
+      box-shadow: 0 10px 25px rgba(34, 197, 94, 0.25);
+    }
+
+    .content-section {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .content-section h3 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+
+    .content-section p.section-desc {
+      color: var(--muted);
+      margin-bottom: 30px;
+      line-height: 1.7;
+    }
+
+    .viz-block {
+      background: rgba(15, 23, 42, 0.45);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 18px;
+      padding: 22px;
+      margin-bottom: 24px;
+    }
+
+    .viz-block h4 {
+      font-size: 1.2rem;
+      margin-bottom: 16px;
+      color: #e2e8f0;
+    }
+
+    object,
+    iframe {
+      width: 100%;
+      border-radius: 14px;
+      background: white;
+    }
+
+    object {
+      min-height: 500px;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      margin-top: 35px;
+      font-size: 0.95rem;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media (max-width: 860px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .panel p {
+        min-height: auto;
+      }
+    }
+  </style>
 </head>
 
 <body>
+  <div class="background-grid"></div>
 
-<h1>Raw Graphs</h1>
+  <div class="container">
+    <header class="hero">
+      <h1>Info Vis</h1>
+      <p>
+        Bienvenido al índice principal del sitio. Desde acá podés navegar entre el
+        trabajo práctico sobre datos personales y las prácticas desarrolladas en clase.
+      </p>
+    </header>
 
-<object type="image/svg+xml" data="./sankey.svg"></object>
+    <section class="main-grid">
+      <article class="panel">
+        <span class="panel-tag tp">Trabajo Práctico</span>
+        <h2>TP1: TP sobre datos personales</h2>
+        <p>
+          Esta sección estará destinada al trabajo práctico basado en el dataset personal,
+          con sus visualizaciones, análisis e interpretaciones.
+        </p>
+        <div class="btn-group">
+          <a href="#tp1" class="btn btn-primary" onclick="showSection('tp1')">
+            Ir a TP1
+          </a>
+        </div>
+      </article>
 
-<h2>Flourish</h2>
+      <article class="panel">
+        <span class="panel-tag practicas">Contenido actual</span>
+        <h2>Prácticas de Clase</h2>
+        <p>
+          Acá se agrupa todo el material que ya tenés: Sankey, Flourish y DataWrapper.
+          Por ahora esta sección contiene tus visualizaciones actuales.
+        </p>
+        <div class="btn-group">
+          <a href="#practicas" class="btn btn-secondary" onclick="showSection('practicas')">
+            Ver prácticas
+          </a>
+        </div>
+      </article>
+    </section>
 
-<div class="flourish-embed flourish-chart" data-src="visualisation/28049686"></div>
-<script src="https://public.flourish.studio/resources/embed.js"></script>
-<noscript>
-  <img src="https://public.flourish.studio/visualisation/28049686/thumbnail" width="100%" alt="visualization" />
-</noscript>
+    <!-- Sección TP1 -->
+    <section id="tp1" class="content-section hidden">
+      <h3>TP1: TP sobre datos personales</h3>
+      <p class="section-desc">
+        Esta página queda preparada para incorporar más adelante las visualizaciones del
+        trabajo práctico basado en tu dataset personal de interacciones.
+      </p>
 
-<h2>DataWrapper: Pizza Range</h2>
+      <div class="viz-block">
+        <h4>Próximamente</h4>
+        <p style="color:#cbd5e1; line-height:1.7;">
+          Acá podemos agregar después gráficos sobre categorías de consultas, evolución temporal,
+          complejidad, tasa de resolución, herramientas detectadas y cualquier otra visualización
+          que quieras sumar.
+        </p>
+      </div>
 
-<iframe
-  title="Favorite Pizza Toppings by Gender"
-  aria-label="Range Plot"
-  id="datawrapper-chart-XwTJU"
-  src="https://datawrapper.dwcdn.net/XwTJU/1/"
-  scrolling="no"
-  frameborder="0"
-  style="width: 0; min-width: 100% !important; border: none;"
-  height="458"
-  data-external="1">
-</iframe>
+      <div class="btn-group">
+        <a href="#" class="btn btn-tertiary" onclick="showSection('home')">Volver al índice</a>
+      </div>
+    </section>
 
-<script type="text/javascript">
-window.addEventListener("message", function(a) {
-  if (void 0 !== a.data["datawrapper-height"]) {
-    var e = document.querySelectorAll("iframe");
-    for (var t in a.data["datawrapper-height"]) {
-      for (var r, i = 0; (r = e[i]); i++) {
-        if (r.contentWindow === a.source) {
-          var d = a.data["datawrapper-height"][t] + "px";
-          r.style.height = d;
+    <!-- Sección Prácticas -->
+    <section id="practicas" class="content-section hidden">
+      <h3>Prácticas de Clase</h3>
+      <p class="section-desc">
+        En esta sección se muestran las visualizaciones que ya tenías desarrolladas.
+      </p>
+
+      <div class="viz-block">
+        <h4>Raw Graphs</h4>
+        <object type="image/svg+xml" data="./sankey.svg"></object>
+      </div>
+
+      <div class="viz-block">
+        <h4>Flourish</h4>
+        <div class="flourish-embed flourish-chart" data-src="visualisation/28049686"></div>
+        <script src="https://public.flourish.studio/resources/embed.js"></script>
+        <noscript>
+          <img
+            src="https://public.flourish.studio/visualisation/28049686/thumbnail"
+            width="100%"
+            alt="visualization"
+          />
+        </noscript>
+      </div>
+
+      <div class="viz-block">
+        <h4>DataWrapper: Pizza Range</h4>
+        <iframe
+          title="Favorite Pizza Toppings by Gender"
+          aria-label="Range Plot"
+          id="datawrapper-chart-XwTJU"
+          src="https://datawrapper.dwcdn.net/XwTJU/1/"
+          scrolling="no"
+          frameborder="0"
+          style="width: 0; min-width: 100% !important; border: none;"
+          height="458"
+          data-external="1">
+        </iframe>
+      </div>
+
+      <div class="btn-group">
+        <a href="#" class="btn btn-tertiary" onclick="showSection('home')">Volver al índice</a>
+      </div>
+    </section>
+
+    <footer>
+      Sitio de visualización de información · Home / Índice principal
+    </footer>
+  </div>
+
+  <script>
+    function showSection(sectionId) {
+      const tp1 = document.getElementById("tp1");
+      const practicas = document.getElementById("practicas");
+
+      tp1.classList.add("hidden");
+      practicas.classList.add("hidden");
+
+      if (sectionId === "tp1") {
+        tp1.classList.remove("hidden");
+        window.location.hash = "tp1";
+      } else if (sectionId === "practicas") {
+        practicas.classList.remove("hidden");
+        window.location.hash = "practicas";
+      } else {
+        window.location.hash = "";
+      }
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    window.addEventListener("message", function(a) {
+      if (a.data["datawrapper-height"]) {
+        var iframes = document.querySelectorAll("iframe");
+        for (var chartId in a.data["datawrapper-height"]) {
+          for (var i = 0; i < iframes.length; i++) {
+            if (iframes[i].contentWindow === a.source) {
+              iframes[i].style.height = a.data["datawrapper-height"][chartId] + "px";
+            }
+          }
         }
       }
-    }
-  }
-});
-</script>
+    });
+
+    window.addEventListener("load", function () {
+      const hash = window.location.hash.replace("#", "");
+
+      if (hash === "tp1") {
+        showSection("tp1");
+      } else if (hash === "practicas") {
+        showSection("practicas");
+      }
+    });
+  </script>
+</body>
+</html>
 
 </body>
 </html>
