@@ -200,8 +200,14 @@
 
     .viz-block h4 {
       font-size: 1.2rem;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
       color: #e2e8f0;
+    }
+
+    .viz-block p {
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 16px;
     }
 
     object,
@@ -284,17 +290,18 @@
     <section id="tp1" class="content-section hidden">
       <h3>TP1: TP sobre datos personales</h3>
       <p class="section-desc">
-        Esta página queda preparada para incorporar más adelante las visualizaciones del
-        trabajo práctico basado en tu dataset personal de interacciones.
+        En esta sección se presentan las visualizaciones del trabajo práctico construido
+        a partir del historial de interacciones, con foco en categorías, tipos de consultas
+        y herramientas asociadas.
       </p>
 
       <div class="viz-block">
-        <h4>Próximamente</h4>
-        <p style="color:#cbd5e1; line-height:1.7;">
-          Acá podemos agregar después gráficos sobre categorías de consultas, evolución temporal,
-          complejidad, tasa de resolución, herramientas detectadas y cualquier otra visualización
-          que quieras sumar.
+        <h4>RawGraphs · Flujo entre tipo de consulta y herramientas</h4>
+        <p>
+          Esta visualización muestra cómo se relacionan los tipos principales de consultas
+          con las herramientas o dominios detectados en las conversaciones.
         </p>
+        <object type="image/svg+xml" data="./openAI.svg"></object>
       </div>
 
       <div class="btn-group">
