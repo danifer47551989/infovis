@@ -1,5 +1,4 @@
 conversation_id,title,date,from,to,duration_minutes,message_count_total,user_message_count,assistant_message_count,primary_category,primary_type,primary_tool,secondary_tool,tertiary_tool,was_solved,complexity_bucket,avg_user_message_length,model_slug
-781bddbb-de23-4da0-8901-ab101c46f877,SQL Query Optimization Help,2023-02-10,2023-02-10 19:52:13.645791,2023-03-15 14:57:45.986008,"47225,54",12,6,6,SQL / BI,How-to / Question,R,SQL Server / SSIS / SSRS,,TRUE,High,"456,2",
 c1556289-d972-444f-bf33-5d602af377f0,Slow Query Optimization Tips,2023-02-10,2023-02-10 19:53:15.903051,2023-02-10 20:18:07.230555,"24,86",15,7,8,SQL / BI,Troubleshooting,SQL / BI Tools,,,TRUE,High,"1910,3",
 db498881-72cb-4979-9e57-39642b404ed1,SQL Query Help Needed,2023-02-10,2023-02-10 19:54:52.780199,2023-02-10 19:55:09.611090,"0,28",2,1,1,SQL / BI,General Inquiry,SQL / BI Tools,,,TRUE,Low,33,
 39d67f70-c0e3-4271-83b0-a6d78646dc74,Create Button In Python Web,2023-02-13,2023-02-13 11:21:07.274784,2023-02-13 11:22:07.501984,1,2,1,1,Python / Programming,Build / Design,Python,,,TRUE,Low,43,
