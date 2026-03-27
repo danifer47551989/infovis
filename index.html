@@ -349,7 +349,6 @@
         <h2>Prácticas de Clase</h2>
         <p>
           Acá se agrupa todo el material que ya tenés: Sankey, Flourish y DataWrapper.
-          Por ahora esta sección contiene tus visualizaciones actuales.
         </p>
         <div class="btn-group">
           <a href="#practicas" class="btn btn-secondary" onclick="showSection('practicas')">
@@ -359,39 +358,44 @@
       </article>
     </section>
 
-    <!-- Sección TP1 -->
+    <!-- ========================= -->
+    <!-- TP1 -->
+    <!-- ========================= -->
     <section id="tp1" class="content-section hidden">
+
       <div class="tp-hero">
         <span class="tp-hero-badge">Trabajo Práctico 1</span>
         <h3 class="tp-main-title">Mis días con la IA</h3>
         <p class="tp-subtitle">
-          Este apartado presenta una lectura visual de mi historial de interacciones con inteligencia
-          artificial, enfocándose en los tipos de consultas realizadas y en los dominios o herramientas
-          que aparecen con mayor frecuencia a lo largo del tiempo.
+          Este apartado presenta una lectura visual del uso de inteligencia artificial a lo largo del tiempo,
+          identificando patrones de uso según tipo de interacción y área temática.
         </p>
       </div>
 
+      <!-- Sankey -->
       <div class="viz-block">
         <h4>Flujo entre tipos de consulta y herramientas asociadas</h4>
         <p>
-          Este gráfico permite observar cómo los principales tipos de consultas se vinculan con
-          herramientas, dominios técnicos o áreas temáticas presentes en las conversaciones.
+          Permite observar la relación entre los distintos tipos de consultas realizadas y las herramientas
+          o dominios técnicos involucrados.
         </p>
         <object type="image/svg+xml" data="./openAI.svg"></object>
       </div>
 
+      <!-- NUEVO STACKED AREA -->
       <div class="viz-block">
-        <h4>Intensidad de uso según tipo de consulta y categoría temática</h4>
+        <h4>Evolución trimestral del uso de IA por categoría</h4>
         <p>
-          Esta visualización permite identificar en qué combinaciones entre tipo de consulta y categoría
-          temática se concentran interacciones más extensas, medidas a partir de la duración total en minutos.
+          Este gráfico muestra la evolución del uso de la inteligencia artificial agrupada por períodos
+          trimestrales, permitiendo identificar tendencias sostenidas y cambios en el foco de uso entre
+          distintas categorías temáticas a lo largo del tiempo.
         </p>
 
-        <div class="flourish-embed flourish-chart" data-src="visualisation/28159932">
+        <div class="flourish-embed flourish-chart" data-src="visualisation/28261037">
           <script src="https://public.flourish.studio/resources/embed.js"></script>
           <noscript>
             <img
-              src="https://public.flourish.studio/visualisation/28159932/thumbnail"
+              src="https://public.flourish.studio/visualisation/28261037/thumbnail"
               width="100%"
               alt="visualization"
             />
@@ -400,16 +404,17 @@
       </div>
 
       <div class="btn-group">
-        <a href="#" class="btn btn-tertiary" onclick="showSection('home')">Volver al índice</a>
+        <a href="#" class="btn btn-tertiary" onclick="showSection('home')">
+          Volver al índice
+        </a>
       </div>
     </section>
 
-    <!-- Sección Prácticas -->
+    <!-- ========================= -->
+    <!-- PRÁCTICAS -->
+    <!-- ========================= -->
     <section id="practicas" class="content-section hidden">
       <h3>Prácticas de Clase</h3>
-      <p class="section-desc">
-        En esta sección se muestran las visualizaciones que ya tenías desarrolladas.
-      </p>
 
       <div class="viz-block">
         <h4>Raw Graphs</h4>
@@ -420,37 +425,25 @@
         <h4>Flourish</h4>
         <div class="flourish-embed flourish-chart" data-src="visualisation/28049686"></div>
         <script src="https://public.flourish.studio/resources/embed.js"></script>
-        <noscript>
-          <img
-            src="https://public.flourish.studio/visualisation/28049686/thumbnail"
-            width="100%"
-            alt="visualization"
-          />
-        </noscript>
       </div>
 
       <div class="viz-block">
-        <h4>DataWrapper: Pizza Range</h4>
+        <h4>DataWrapper</h4>
         <iframe
-          title="Favorite Pizza Toppings by Gender"
-          aria-label="Range Plot"
-          id="datawrapper-chart-XwTJU"
           src="https://datawrapper.dwcdn.net/XwTJU/1/"
-          scrolling="no"
-          frameborder="0"
-          style="width: 0; min-width: 100% !important; border: none;"
-          height="458"
-          data-external="1">
+          style="width:100%;height:458px;border:none;">
         </iframe>
       </div>
 
       <div class="btn-group">
-        <a href="#" class="btn btn-tertiary" onclick="showSection('home')">Volver al índice</a>
+        <a href="#" class="btn btn-tertiary" onclick="showSection('home')">
+          Volver al índice
+        </a>
       </div>
     </section>
 
     <footer>
-      Sitio de visualización de información · Home / Índice principal
+      Sitio de visualización de información
     </footer>
   </div>
 
@@ -464,40 +457,12 @@
 
       if (sectionId === "tp1") {
         tp1.classList.remove("hidden");
-        window.location.hash = "tp1";
       } else if (sectionId === "practicas") {
         practicas.classList.remove("hidden");
-        window.location.hash = "practicas";
-      } else {
-        window.location.hash = "";
       }
 
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
-
-    window.addEventListener("message", function(a) {
-      if (a.data["datawrapper-height"]) {
-        var iframes = document.querySelectorAll("iframe");
-        for (var chartId in a.data["datawrapper-height"]) {
-          for (var i = 0; i < iframes.length; i++) {
-            if (iframes[i].contentWindow === a.source) {
-              iframes[i].style.height = a.data["datawrapper-height"][chartId] + "px";
-            }
-          }
-        }
-      }
-    });
-
-    window.addEventListener("load", function () {
-      const hash = window.location.hash.replace("#", "");
-
-      if (hash === "tp1") {
-        showSection("tp1");
-      } else if (hash === "practicas") {
-        showSection("practicas");
-      }
-    });
   </script>
 </body>
 </html>
-
