@@ -382,7 +382,7 @@
         <object type="image/svg+xml" data="./openAI.svg"></object>
       </div>
 
-      <!-- NUEVO STACKED AREA -->
+      <!-- STACKED AREA -->
       <div class="viz-block">
         <h4>Evolución trimestral del uso de IA por categoría</h4>
         <p>
@@ -401,6 +401,28 @@
             />
           </noscript>
         </div>
+      </div>
+
+      <!-- DATAWRAPPER NUEVO -->
+      <div class="viz-block">
+        <h4>¿Qué tan complejas son mis interacciones con IA según la categoría?</h4>
+        <p>
+          Esta visualización compara la proporción de interacciones de baja, media y alta complejidad
+          dentro de cada categoría temática, permitiendo identificar en qué áreas se concentran los usos
+          más exigentes de la inteligencia artificial.
+        </p>
+
+        <iframe
+          title="¿Qué tan complejas son mis interacciones con IA según la categoría?"
+          aria-label="Stacked Bars"
+          id="datawrapper-chart-XwTJU"
+          src="https://datawrapper.dwcdn.net/XwTJU/1/"
+          scrolling="no"
+          frameborder="0"
+          style="width: 0; min-width: 100% !important; border: none;"
+          height="458"
+          data-external="1">
+        </iframe>
       </div>
 
       <div class="btn-group">
@@ -430,8 +452,15 @@
       <div class="viz-block">
         <h4>DataWrapper</h4>
         <iframe
+          title="Favorite Pizza Toppings by Gender"
+          aria-label="Range Plot"
+          id="datawrapper-chart-practicas"
           src="https://datawrapper.dwcdn.net/XwTJU/1/"
-          style="width:100%;height:458px;border:none;">
+          scrolling="no"
+          frameborder="0"
+          style="width: 0; min-width: 100% !important; border: none;"
+          height="458"
+          data-external="1">
         </iframe>
       </div>
 
@@ -457,12 +486,40 @@
 
       if (sectionId === "tp1") {
         tp1.classList.remove("hidden");
+        window.location.hash = "tp1";
       } else if (sectionId === "practicas") {
         practicas.classList.remove("hidden");
+        window.location.hash = "practicas";
+      } else {
+        window.location.hash = "";
       }
 
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
+
+    window.addEventListener("message", function(a) {
+      if (void 0 !== a.data["datawrapper-height"]) {
+        var iframes = document.querySelectorAll("iframe");
+        for (var chartId in a.data["datawrapper-height"]) {
+          for (var i = 0; i < iframes.length; i++) {
+            if (iframes[i].contentWindow === a.source) {
+              var d = a.data["datawrapper-height"][chartId] + "px";
+              iframes[i].style.height = d;
+            }
+          }
+        }
+      }
+    });
+
+    window.addEventListener("load", function () {
+      const hash = window.location.hash.replace("#", "");
+
+      if (hash === "tp1") {
+        showSection("tp1");
+      } else if (hash === "practicas") {
+        showSection("practicas");
+      }
+    });
   </script>
 </body>
 </html>
